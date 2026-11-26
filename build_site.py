@@ -278,6 +278,9 @@ def page(title, body, desc, hero=""):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)} | FixErrorGuide</title>
 <meta name="description" content="{html.escape(desc)}">
+<meta name="google-site-verification" content="Zue3je6DCsjs6V7oQCbEP70AU7M6sKepnncszhgXf2c">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3KF128VQSR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-3KF128VQSR');</script>
 <link rel="icon" href="{FAVICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -448,11 +451,12 @@ with open(os.path.join(OUT, "contact.html"), "w") as f:
     f.write(page("Ask a Fix — Contact FixErrorGuide", CONTACT, "Ask FixErrorGuide about an appliance error code: send your brand, code and model and we will research it."))
 urls.append("contact.html")
 
+SITE_BASE = "https://fixerrorguide.netlify.app"  # switch to https://fixerrorguide.com when the domain is live
 with open(os.path.join(OUT, "sitemap.xml"), "w") as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-            "".join(f"<url><loc>https://fixerrorguide.com/{u}</loc></url>\n" for u in urls) + "</urlset>")
+            "".join(f"<url><loc>{SITE_BASE}/{u}</loc></url>\n" for u in urls) + "</urlset>")
 with open(os.path.join(OUT, "robots.txt"), "w") as f:
-    f.write("User-agent: *\nAllow: /\nSitemap: https://fixerrorguide.com/sitemap.xml\n")
+    f.write(f"User-agent: *\nAllow: /\nSitemap: {SITE_BASE}/sitemap.xml\n")
 with open(os.path.join(OUT, "logo.svg"), "w") as f:
     f.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="2" y="2" width="44" height="44" rx="11" fill="#ff6b1a"/><path d="M30.6 12.2a7.4 7.4 0 0 0-6.9 9.6L12 33.5a4.14 4.14 0 1 0 5.9 5.9l11.6-11.7a7.4 7.4 0 0 0 9.7-7l-4.9 4.9-3.3-1-1-3.3 4.6-4.9z" fill="#fff"/></svg>')
 
