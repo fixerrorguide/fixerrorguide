@@ -453,6 +453,30 @@ with open(os.path.join(OUT, "contact.html"), "w") as f:
     f.write(page("Ask a Fix — Contact FixErrorGuide", CONTACT, "Ask FixErrorGuide about an appliance error code: send your brand, code and model and we will research it."))
 urls.append("contact.html")
 
+THANKS_BODY = """
+<p class="kicker">Newsletter</p>
+<h1 class="ptitle">Almost done — check your inbox</h1>
+<p>We just sent a confirmation email to the address you entered. Click the link inside it and your subscription is complete. That extra click is what keeps anyone else from signing you up without your permission.</p>
+<p>No email after a few minutes? Check your Promotions or Spam folder, and drag it into your main inbox so the weekly issue reaches you.</p>
+<div class="card"><p style="margin:0 0 8px"><strong>While you wait, grab your cheat sheet now:</strong></p>
+<p style="margin:0"><a href="/washer-error-code-cheat-sheet.pdf">Download the Washer Error Code Cheat Sheet (PDF)</a> — every LG and Samsung washer code on one printable page.</p></div>
+"""
+with open(os.path.join(OUT, "thanks.html"), "w") as f:
+    f.write(page("Almost done — check your inbox", THANKS_BODY, "Confirm your FixErrorGuide newsletter subscription.")
+            .replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
+
+CONFIRMED_BODY = """
+<p class="kicker">Newsletter</p>
+<h1 class="ptitle">You're in — welcome to FixError Guide</h1>
+<p>Your subscription is confirmed. One email a week: one error code decoded in plain English, one fix you can safely do yourself, and what a technician would charge if you can't. No spam, ever, and one click unsubscribes you.</p>
+<div class="card"><p style="margin:0 0 8px"><strong>Your free cheat sheet:</strong></p>
+<p style="margin:0"><a href="/washer-error-code-cheat-sheet.pdf">Download the Washer Error Code Cheat Sheet (PDF)</a> — print it and keep it near the washer.</p></div>
+<p>Machine showing a code right now? Start with the <a href="/lg-washer-error-codes.html">LG codes</a> or the <a href="/samsung-washer-error-codes.html">Samsung codes</a>.</p>
+"""
+with open(os.path.join(OUT, "confirmed.html"), "w") as f:
+    f.write(page("You're in — subscription confirmed", CONFIRMED_BODY, "Your FixErrorGuide newsletter subscription is confirmed.")
+            .replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
+
 SITE_BASE = "https://fixerrorguide.netlify.app"  # switch to https://fixerrorguide.com when the domain is live
 with open(os.path.join(OUT, "sitemap.xml"), "w") as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
