@@ -270,7 +270,7 @@ FAVICON = "data:image/svg+xml," + ("%3Csvg xmlns='http://www.w3.org/2000/svg' vi
 NEWSLETTER = """
 <div class="newsletter"><h3>Get one fix in your inbox, every week</h3>
 <p>One error code explained, one repair you can do yourself, zero spam. Join the list and never pay for a fix you could do in 20 minutes.</p>
-<form onsubmit="event.preventDefault();this.innerHTML='<b style=&quot;color:#0a2540;padding:10px&quot;>You are on the list — welcome!</b>'"><input type="email" required placeholder="Your email address"><button type="submit">Join free</button></form></div>
+<form action="https://buttondown.com/api/emails/embed-subscribe/fixerrorguide" method="post" target="_blank"><input type="email" name="email" required placeholder="Your email address"><button type="submit">Join free</button></form></div>
 """
 
 def page(title, body, desc, hero=""):
