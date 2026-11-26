@@ -189,9 +189,9 @@ nav.main{margin-left:auto;display:flex;gap:16px;align-items:center;flex-wrap:wra
 nav.main a{color:#dbe7f5;text-decoration:none;font-weight:600;font-size:14px}
 nav.main a:hover{color:#fff}
 .social{display:flex;gap:8px}
-.social a{width:34px;height:34px;border-radius:9px;background:#fff;display:inline-flex;align-items:center;justify-content:center}
-.social a:hover{background:#fff;opacity:.85}
-.social svg{width:19px;height:19px}
+.social a{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;background:transparent}
+.social a:hover{background:transparent;opacity:.75}
+.social svg{width:20px;height:20px}
 .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#155e8a 100%);color:#fff;padding:52px 18px 46px;text-align:center}
 .hero h1{font-size:42px;font-weight:900;line-height:1.12;margin:0 0 12px}
 .hero h1 .hl{color:var(--org2)}
@@ -250,7 +250,7 @@ footer.site h4{color:#fff;font-family:'Archivo';margin:0 0 10px;font-size:15px}
 footer.site a{color:#cfe0f2;text-decoration:none;display:block;margin:5px 0;font-size:14px}
 footer.site a:hover{color:#fff}
 .fbot{border-top:1px solid rgba(255,255,255,.14);padding:14px 18px;text-align:center;font-size:12.5px;color:#8fa9c4;max-width:1060px;margin:0 auto}
-footer.site .social a{background:#fff}
+footer.site .social a{background:transparent}
 @media(max-width:640px){.hero h1{font-size:31px}.codebadge{font-size:40px}h1.ptitle{font-size:26px}}
 """
 
@@ -262,7 +262,7 @@ SOC = {
  "facebook": ("https://www.facebook.com/fixerrorguide", "M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"),
  "x": ("https://x.com/fixerrorguide", "M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"),
 }
-SOC_COLORS = {"youtube": "#FF0000", "pinterest": "#E60023", "facebook": "#1877F2", "x": "#000000"}
+SOC_COLORS = {"youtube": "#FF0000", "pinterest": "#E60023", "facebook": "#1877F2", "x": "#FFFFFF"}
 def social_html():
     return "".join(f'<a href="{u}" target="_blank" rel="noopener" aria-label="{n}"><svg viewBox="0 0 24 24"><path fill="{SOC_COLORS[n]}" d="{p}"/></svg></a>' for n,(u,p) in SOC.items())
 
