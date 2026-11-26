@@ -268,9 +268,10 @@ def social_html():
 FAVICON = "data:image/svg+xml," + ("%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='2' y='2' width='44' height='44' rx='11' fill='%23ff6b1a'/%3E%3Cpath d='M30.6 12.2a7.4 7.4 0 0 0-6.9 9.6L12 33.5a4.14 4.14 0 1 0 5.9 5.9l11.6-11.7a7.4 7.4 0 0 0 9.7-7l-4.9 4.9-3.3-1-1-3.3 4.6-4.9z' fill='%23fff'/%3E%3C/svg%3E")
 
 NEWSLETTER = """
-<div class="newsletter"><h3>Get one fix in your inbox, every week</h3>
-<p>One error code explained, one repair you can do yourself, zero spam. Join the list and never pay for a fix you could do in 20 minutes.</p>
-<form action="https://buttondown.com/api/emails/embed-subscribe/fixerrorguide" method="post" target="_blank"><input type="email" name="email" required placeholder="Your email address"><button type="submit">Join free</button></form></div>
+<div class="newsletter"><h3>Get the free Washer Error Code Cheat Sheet</h3>
+<p>Every LG and Samsung washer code on one printable page: what it means and the first safe check. Plus one decoded code and one do-it-yourself fix in your inbox, every week.</p>
+<form action="https://buttondown.com/api/emails/embed-subscribe/fixerrorguide" method="post" target="_blank"><input type="email" name="email" required placeholder="Your email address"><button type="submit">Send my cheat sheet</button></form>
+<p style="margin:12px 0 0;font-size:13px">Free PDF &middot; No spam &middot; Unsubscribe anytime</p></div>
 """
 
 def page(title, body, desc, hero=""):
