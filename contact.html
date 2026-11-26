@@ -97,14 +97,32 @@ footer.site .social a{background:transparent}
 <p class="kicker">Ask a fix</p>
 <h1 class="ptitle">Tell us your code — we will decode it</h1>
 <p>Machine showing a code we have not covered yet, or a guide that did not solve it? Send the details below. Unlisted codes go to the top of our research list, and the answer is published as a new guide for everyone.</p>
-<div class="card"><form onsubmit="event.preventDefault();var b='Brand: '+this.brand.value+'%0D%0ACode: '+this.code.value+'%0D%0AModel: '+this.model.value+'%0D%0A%0D%0A'+encodeURIComponent(this.msg.value);window.location='mailto:contact@fixerrorguide.com?subject='+encodeURIComponent('Error code question: '+this.brand.value+' '+this.code.value)+'&body='+b;">
-<p><label><strong>Brand</strong></label><br><input name="brand" required style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="e.g. LG"></p>
-<p><label><strong>Error code shown</strong></label><br><input name="code" required style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="e.g. OE"></p>
-<p><label><strong>Model number (if you know it)</strong></label><br><input name="model" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="On a sticker inside the door"></p>
-<p><label><strong>What happened?</strong></label><br><textarea name="msg" rows="4" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="When does the code appear? Any noise, leaks or smells?"></textarea></p>
+<div class="card"><form action="https://formsubmit.co/fixerrorguide@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="Error code question from FixErrorGuide">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="https://fixerrorguide.mrhossamyahya.workers.dev/ask-thanks.html">
+<p><label><strong>Brand</strong></label><br><select name="brand" id="askbrand" required style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff"><option value="" selected disabled>Choose your brand</option><option value="LG">LG</option><option value="Samsung">Samsung</option><option value="Whirlpool">Whirlpool</option><option value="Maytag">Maytag</option><option value="Bosch">Bosch</option><option value="GE">GE</option><option value="Frigidaire">Frigidaire</option><option value="Kenmore">Kenmore</option><option value="Electrolux">Electrolux</option><option value="Haier">Haier</option><option value="Other">Other</option></select></p>
+<p><label><strong>Error code shown</strong></label><br><select name="code" id="askcode" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff"><option value="" selected>Choose the brand first</option></select><input name="code if not listed" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff;margin-top:8px" placeholder="Or type the code exactly as shown on the display"></p>
+<p><label><strong>Model number (if you know it)</strong></label><br><input name="model" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff" placeholder="On a sticker inside the door"></p>
+<p><label><strong>What happened?</strong></label><br><textarea name="message" rows="4" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff" placeholder="When does the code appear? Any noise, leaks or smells?"></textarea></p>
+<p><label><strong>Your email (optional)</strong></label><br><input type="email" name="email" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff" placeholder="Only if you want the answer sent to you as well"></p>
 <button type="submit" style="background:var(--org);color:#fff;border:0;border-radius:10px;padding:12px 22px;font-weight:700;font-family:'Archivo';cursor:pointer;font-size:15px">Send my question</button>
 </form></div>
-<div class="note">The button opens your email app with everything filled in — just press send there. We read every question; the most-asked codes become full guides.</div>
+<div class="note">Your question lands straight in our inbox — no email app needed. We read every question; the most-asked codes become full guides.</div>
+<script>
+var BRAND_CODES = {"LG": ["OE", "UE", "IE", "dE", "LE", "FE", "PE", "tE", "CL"], "Samsung": ["4C", "5C", "UE", "dC", "LC", "SUD"]};
+var bsel=document.getElementById('askbrand'),csel=document.getElementById('askcode');
+bsel.addEventListener('change',function(){
+  var codes=BRAND_CODES[bsel.value]||[];
+  csel.innerHTML='';
+  var first=document.createElement('option');first.value='';
+  first.textContent=codes.length?'Pick the code on your display':'Not covered yet — type the code below';
+  csel.appendChild(first);
+  codes.forEach(function(cd){var o=document.createElement('option');o.value=cd;o.textContent=cd;csel.appendChild(o);});
+  var other=document.createElement('option');other.value='Not listed';other.textContent='Not listed here';csel.appendChild(other);
+});
+</script>
 </main>
 <footer class="site"><div class="fwrap">
 <div><a class="logo" href="/index.html"><svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="11" fill="#ff6b1a"/><path d="M30.6 12.2a7.4 7.4 0 0 0-6.9 9.6L12 33.5a4.14 4.14 0 1 0 5.9 5.9l11.6-11.7a7.4 7.4 0 0 0 9.7-7l-4.9 4.9-3.3-1-1-3.3 4.6-4.9z" fill="#fff"/></svg><span><span class="wm">Fix<b>Error</b>Guide</span><small>APPLIANCE ERROR CODES, DECODED</small></span></a>

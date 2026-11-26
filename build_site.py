@@ -437,19 +437,46 @@ with open(os.path.join(OUT, "faq.html"), "w") as f:
     f.write(page("FAQ — Appliance Error Codes", FAQ, "Answers to the most common questions about appliance error codes, safety, repair costs and how FixErrorGuide works."))
 urls.append("faq.html")
 
+BRAND_CODES = {}
+for _c in CODES:
+    BRAND_CODES.setdefault(_c["brand"], []).append(_c["code"])
+ASK_BRANDS = ["LG", "Samsung", "Whirlpool", "Maytag", "Bosch", "GE", "Frigidaire", "Kenmore", "Electrolux", "Haier", "Other"]
+BRAND_OPTIONS = "".join(f'<option value="{b}">{b}</option>' for b in ASK_BRANDS)
+FIELD = "width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px;background:#fff"
 CONTACT = """
 <p class="kicker">Ask a fix</p>
 <h1 class="ptitle">Tell us your code — we will decode it</h1>
 <p>Machine showing a code we have not covered yet, or a guide that did not solve it? Send the details below. Unlisted codes go to the top of our research list, and the answer is published as a new guide for everyone.</p>
-<div class="card"><form onsubmit="event.preventDefault();var b='Brand: '+this.brand.value+'%0D%0ACode: '+this.code.value+'%0D%0AModel: '+this.model.value+'%0D%0A%0D%0A'+encodeURIComponent(this.msg.value);window.location='mailto:contact@fixerrorguide.com?subject='+encodeURIComponent('Error code question: '+this.brand.value+' '+this.code.value)+'&body='+b;">
-<p><label><strong>Brand</strong></label><br><input name="brand" required style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="e.g. LG"></p>
-<p><label><strong>Error code shown</strong></label><br><input name="code" required style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="e.g. OE"></p>
-<p><label><strong>Model number (if you know it)</strong></label><br><input name="model" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="On a sticker inside the door"></p>
-<p><label><strong>What happened?</strong></label><br><textarea name="msg" rows="4" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:15px" placeholder="When does the code appear? Any noise, leaks or smells?"></textarea></p>
+<div class="card"><form action="https://formsubmit.co/fixerrorguide@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="Error code question from FixErrorGuide">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="https://fixerrorguide.mrhossamyahya.workers.dev/ask-thanks.html">
+<p><label><strong>Brand</strong></label><br><select name="brand" id="askbrand" required style="__FIELD__"><option value="" selected disabled>Choose your brand</option>__BRAND_OPTIONS__</select></p>
+<p><label><strong>Error code shown</strong></label><br><select name="code" id="askcode" style="__FIELD__"><option value="" selected>Choose the brand first</option></select><input name="code if not listed" style="__FIELD__;margin-top:8px" placeholder="Or type the code exactly as shown on the display"></p>
+<p><label><strong>Model number (if you know it)</strong></label><br><input name="model" style="__FIELD__" placeholder="On a sticker inside the door"></p>
+<p><label><strong>What happened?</strong></label><br><textarea name="message" rows="4" style="__FIELD__" placeholder="When does the code appear? Any noise, leaks or smells?"></textarea></p>
+<p><label><strong>Your email (optional)</strong></label><br><input type="email" name="email" style="__FIELD__" placeholder="Only if you want the answer sent to you as well"></p>
 <button type="submit" style="background:var(--org);color:#fff;border:0;border-radius:10px;padding:12px 22px;font-weight:700;font-family:'Archivo';cursor:pointer;font-size:15px">Send my question</button>
 </form></div>
-<div class="note">The button opens your email app with everything filled in — just press send there. We read every question; the most-asked codes become full guides.</div>
+<div class="note">Your question lands straight in our inbox — no email app needed. We read every question; the most-asked codes become full guides.</div>
+<script>
+var BRAND_CODES = __BRAND_CODES_JSON__;
+var bsel=document.getElementById('askbrand'),csel=document.getElementById('askcode');
+bsel.addEventListener('change',function(){
+  var codes=BRAND_CODES[bsel.value]||[];
+  csel.innerHTML='';
+  var first=document.createElement('option');first.value='';
+  first.textContent=codes.length?'Pick the code on your display':'Not covered yet — type the code below';
+  csel.appendChild(first);
+  codes.forEach(function(cd){var o=document.createElement('option');o.value=cd;o.textContent=cd;csel.appendChild(o);});
+  var other=document.createElement('option');other.value='Not listed';other.textContent='Not listed here';csel.appendChild(other);
+});
+</script>
 """
+CONTACT = (CONTACT.replace("__BRAND_OPTIONS__", BRAND_OPTIONS)
+                  .replace("__BRAND_CODES_JSON__", json.dumps(BRAND_CODES))
+                  .replace("__FIELD__", FIELD))
 with open(os.path.join(OUT, "contact.html"), "w") as f:
     f.write(page("Ask a Fix — Contact FixErrorGuide", CONTACT, "Ask FixErrorGuide about an appliance error code: send your brand, code and model and we will research it."))
 urls.append("contact.html")
@@ -476,6 +503,17 @@ CONFIRMED_BODY = """
 """
 with open(os.path.join(OUT, "confirmed.html"), "w") as f:
     f.write(page("You're in — subscription confirmed", CONFIRMED_BODY, "Your FixErrorGuide newsletter subscription is confirmed.")
+            .replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
+
+ASK_THANKS_BODY = """
+<p class="kicker">Ask a fix</p>
+<h1 class="ptitle">Thanks — your question is in</h1>
+<p>Your question just landed in our inbox. We read every single one; unlisted codes go to the top of our research list, and the most-asked codes become full published guides for everyone.</p>
+<div class="card"><p style="margin:0 0 8px"><strong>While you wait:</strong></p>
+<p style="margin:0">Browse the <a href="/lg-washer-error-codes.html">LG codes</a> or the <a href="/samsung-washer-error-codes.html">Samsung codes</a>, or grab the free <a href="/washer-error-code-cheat-sheet.pdf">Washer Error Code Cheat Sheet (PDF)</a> — every covered code on one printable page.</p></div>
+"""
+with open(os.path.join(OUT, "ask-thanks.html"), "w") as f:
+    f.write(page("Thanks — your question is in", ASK_THANKS_BODY, "Thank you for your FixErrorGuide question.")
             .replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
 
 SITE_BASE = "https://fixerrorguide.netlify.app"  # switch to https://fixerrorguide.com when the domain is live
